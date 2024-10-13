@@ -1,0 +1,57 @@
+FORMULAS:
+
+Mifflin-St Jeor Equation FOR (BMR - basal metabolic rate)
+For men:
+BMR = 10W + 6.25H - 5A + 5
+For women:
+BMR = 10W + 6.25H - 5A - 161
+
+(the BMR above is the total calories needed to MAINTAIN YOUR WEIGHT considering you DONT WORKOUT)
+
+W is body weight in kg
+H is body height in cm
+A is age
+F is body fat in percentage
+
+(if you DO WORKOUT times the BMR by the values below) = CAL.COUNT = daily calories count
+
+Sedentary (little or no exercise): 1.2
+Lightly active (light exercise/sports 1-3 days/week): 1.375
+Moderately active (moderate exercise/sports 3-5 days/week): 1.55
+Very active (hard exercise/sports 6-7 days a week): 1.725
+Super active (very hard exercise & physical job or 2x training): 1.9
+
+TO LOSE 0.45kg PER WEEK (CAL.COUNT - 500) - WEIGHT LOSS
+TO LOSE 0.91kg PER WEEK (CAL.COUNT - 1000) - EXTREME WEIGHT LOSS
+MAINTAIN WEIGHT = (BMR X ACTIVITY rate)
+TO GAIN 0.45kg PER WEEK (CAL.COUNT + 500) - BULK 
+TO GAIN 0.91kg PER WEEK (CAL.COUNT + 1000) - EXTREME BULK
+
+---------------------------------------------------------------------------------------------------------------------------
+
+OTHER IMPORTANT THINGS:
+
+create a db file (calories.db) store a table for login info
+sudo apt-get update
+sudo apt-get install sqlite3
+sqlite3 --version
+sqlite3 cal.db
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    email TEXT
+);
+password -> stored cryptically, time the account was made
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+store hashed passwords on the data-base
+login required function 
+
+db file containing calories for all common food items. (may have to incorporate multiple db file)
+
+
+
+
+

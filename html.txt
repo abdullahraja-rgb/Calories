@@ -1,0 +1,5 @@
+layout.html -> when logged in shows options (calculate, logout, cal count, timeline - calender)
+calculated.html -> when requested on calculator.html we open up a new html with (calories required)
+index.html -> the intro page showing (login, register) info + a bit about the company, with links to social media
+register.html -> done
+login -> done
