@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block title %}
+    Calorie Calculations
+{% endblock %}
+
+{% block main %}
+    <h1>Your Calorie Calculations</h1>
+    <form action="{{ url_for('select_calorie') }}" method="post">
+        <ul>
+            <li>
+                <input type="radio" id="cal_extreme_loss" name="calorie" value="{{ cal_extreme_loss }}">
+                <label for="cal_extreme_loss">Extreme Weight Loss: {{ cal_extreme_loss }} calories/day</label>
+            </li>
+            <li>
+                <input type="radio" id="cal_mild_loss" name="calorie" value="{{ cal_mild_loss }}">
+                <label for="cal_mild_loss">Mild Weight Loss: {{ cal_mild_loss }} calories/day</label>
+            </li>
+            <li>
+                <input type="radio" id="cal_maintain_weight" name="calorie" value="{{ cal_maintain_weight }}">
+                <label for="cal_maintain_weight">Maintain Weight: {{ cal_maintain_weight }} calories/day</label>
+            </li>
+            <li>
+                <input type="radio" id="cal_mild_gain" name="calorie" value="{{ cal_mild_gain }}">
+                <label for="cal_mild_gain">Mild Weight Gain: {{ cal_mild_gain }} calories/day</label>
+            </li>
+            <li>
+                <input type="radio" id="cal_extreme_gain" name="calorie" value="{{ cal_extreme_gain }}">
+                <label for="cal_extreme_gain">Extreme Weight Gain: {{ cal_extreme_gain }} calories/day</label>
+            </li>
+        </ul>
+        <button type="submit">Set</button>
+    </form>
+{% endblock %}
+
+
+
+

@@ -3,3 +3,209 @@ calculated.html -> when requested on calculator.html we open up a new html with 
 index.html -> the intro page showing (login, register) info + a bit about the company, with links to social media
 register.html -> done
 login -> done
+
+
+
+-----------------------
+
+{% extends "layout.html" %}
+
+{% block title %}
+    Tracker
+{% endblock %}
+
+{% block main %}
+<!DOCTYPE html>
+
+<html lang="en">
+	<form action="/tracker" method="post">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<body>
+			<h1>Welcome to the Food Tracker</h1>
+			
+			<!-- Search Form -->
+			<h2>Search for a Food</h2>
+			<form id="food-search-form">
+				<input type="text" id="food-query" placeholder="Enter food name" required>
+				<button type="submit">Search</button>
+			</form>
+		
+			<h3>Search Results</h3>
+			<div id="search-results">
+				<!-- Caloric and food data will appear here -->
+			</div>
+		
+			<!-- Logout Link -->
+			<a href="{{ url_for('logout') }}">Logout</a>
+		
+			<script>
+				// AJAX request when the user submits the form
+				$(document).ready(function() {
+					$('#food-search-form').submit(function(e) {
+						e.preventDefault();  // Prevent form from submitting normally
+		
+						var query = $('#food-query').val();  // Get the food query entered by the user
+		
+						// Make the AJAX request to the Open Food Facts API
+						$.ajax({
+							url: `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${query}&search_simple=1&action=process&json=1`,
+							method: 'GET',
+							success: function(data) {
+								// Clear the previous results
+								$('#search-results').empty();
+								
+								if (data.products && data.products.length > 0) {
+									// Loop through the products and display the relevant data
+									data.products.forEach(function(product) {
+										var name = product.product_name || "N/A";
+										var calories = product.nutriments ? product.nutriments["energy-kcal_100g"] : "N/A";
+										var brand = product.brands || "N/A";
+										
+										// Append the result to the search-results div
+										$('#search-results').append(`
+											<div>
+												<h4>${name}</h4>
+												<p><strong>Brand:</strong> ${brand}</p>
+												<p><strong>Calories:</strong> ${calories} kcal/100g</p>
+											</div>
+											<hr>
+										`);
+									});
+								} else {
+									// If no results found
+									$('#search-results').append("<p>No products found.</p>");
+								}
+							},
+							error: function() {
+								// Handle the error
+								$('#search-results').empty();
+								$('#search-results').append("<p>There was an error fetching the data.</p>");
+							}
+						});
+					});
+				});
+			</script>
+		</body>
+		</html>
+		
+		
+
+{% endblock %}
+
+
+@app.route("/tracker", methods=["GET", "POST"])
+@login_required
+def tracker():
+    
+    return render_template("tracker.html")
+
+	-------------------------------------------------------------------------------------------------
+
+	@app.route("/tracker", methods=["GET", "POST"])
+@login_required
+def tracker():
+    search_results = []
+    selected_food = None
+    selected_food_calories = None
+    calorie_status = None
+
+    # Get current user's calorie status
+    try:
+        connection = get_db()
+        user_id = session["user_id"]
+        
+        # Get today's tracking data
+        calorie_status = connection.execute("""
+            SELECT daily_goal, consumed_calories, remaining_calories 
+            FROM calorie_tracking 
+            WHERE user_id = ? AND date = DATE('now')
+        """, (user_id,)).fetchone()
+        
+        if not calorie_status:
+            # Get user's goal from tracker table
+            user_goal = connection.execute("""
+                SELECT goal FROM tracker WHERE user_id = ?
+            """, (user_id,)).fetchone()
+            
+            daily_goal = user_goal["goal"] if user_goal else 2000
+            
+            # Create new tracking record for today
+            connection.execute("""
+                INSERT INTO calorie_tracking (user_id, date, daily_goal, consumed_calories, remaining_calories)
+                VALUES (?, DATE('now'), ?, 0, ?)
+            """, (user_id, daily_goal, daily_goal))
+            connection.commit()
+            
+            calorie_status = {
+                'daily_goal': daily_goal,
+                'consumed_calories': 0,
+                'remaining_calories': daily_goal
+            }
+    except Exception as e:
+        print(f"Error getting calorie status: {e}")
+        flash("Error loading calorie status.", "danger")
+    finally:
+        if 'connection' in locals():
+            connection.close()
+
+    if request.method == "POST":
+        query = request.form.get("search")
+        if not query:
+            flash("Please enter a search term.", "warning")
+            return render_template("tracker.html", 
+                                search_results=search_results, 
+                                calorie_status=calorie_status)
+
+        try:
+            url = f'https://world.openfoodfacts.org/cgi/search.pl?search_terms={query}&search_simple=1&action=process&json=1'
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()
+            data = response.json()
+
+            if 'products' in data and isinstance(data['products'], list):
+                for product in data['products']:
+                    name = product.get('product_name', 'Unknown')
+                    # Try multiple calorie fields
+                    calories = (
+                        product.get('nutriments', {}).get('energy-kcal_100g') or
+                        product.get('nutriments', {}).get('energy_100g') or
+                        product.get('nutriments', {}).get('energy-kcal') or
+                        product.get('nutriments', {}).get('energy')
+                    )
+                    brand = product.get('brands', 'Unknown')
+
+                    if name and name != 'Unknown' and calories:
+                        try:
+                            calories = round(float(calories), 2)
+                            search_results.append({
+                                'name': name,
+                                'calories': calories,
+                                'brand': brand
+                            })
+                        except (ValueError, TypeError):
+                            continue
+
+            selected_food = request.form.get("food")
+            if selected_food:
+                selected_food_calories = next(
+                    (result["calories"] for result in search_results 
+                     if result["name"] == selected_food), 
+                    None
+                )
+
+        except requests.exceptions.RequestException as e:
+            flash(f"Error fetching food data: {str(e)}", "danger")
+        except Exception as e:
+            flash(f"An unexpected error occurred: {str(e)}", "danger")
+
+    return render_template(
+        "tracker.html",
+        search_results=search_results,
+        selected_food=selected_food,
+        selected_food_calories=selected_food_calories,
+        calorie_status=calorie_status
+    )

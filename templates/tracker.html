@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Food Tracker
+{% endblock %}
+
+{% block main %}
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold mb-6 text-center">Food Tracker</h1>
+
+        <!-- Search Section - Only show if not in weight input mode -->
+        {% if not selected_food %}
+            <section class="mb-8">
+                <form action="/tracker" method="POST" class="max-w-md mx-auto">
+                    <div class="flex gap-2">
+                        <div class="flex-1">
+                            <label for="search" class="block mb-2">Search Food:</label>
+                            <input 
+                                type="text" 
+                                id="search" 
+                                name="search" 
+                                placeholder="Enter food name" 
+                                class="w-full p-2 border rounded"
+                                required
+                            >
+                        </div>
+                        <button 
+                            type="submit" 
+                            class="px-3 py-1.5 bg-gradient-to-r from-indigo-200 to-purple-300 text-black rounded-md shadow-md hover:from-indigo-300 hover:to-purple-400 transition duration-300 ease-in-out self-end font-bold"
+                        >
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Search Results Section - Only show if we have results and not in weight input mode -->
+            {% if search_results %}
+                <section class="mb-8">
+                    <h2 class="text-xl font-semibold mb-4">Search Results</h2>
+                    <form action="/select-food" method="POST" class="bg-white p-6 rounded-lg shadow">
+                        <fieldset>
+                            <legend class="sr-only">Select a food item</legend>
+                            <div class="space-y-4">
+                                {% for result in search_results %}
+                                    <div class="flex items-center p-3 {% if not loop.last %}border-b{% endif %}">
+                                        <input 
+                                            type="radio" 
+                                            id="food_{{ loop.index }}" 
+                                            name="food" 
+                                            value="{{ result.name }}"
+                                            class="mr-3"
+                                            required
+                                        >
+                                        <input 
+                                            type="hidden" 
+                                            name="calories_per_100g" 
+                                            value="{{ result.calories }}"
+                                        >
+                                        <label for="food_{{ loop.index }}" class="flex-1">
+                                            <span class="font-medium">{{ result.name }}</span>
+                                            <span class="text-gray-600 ml-2">({{ result.calories }} kcal/100g)</span>
+                                            {% if result.brand != 'Unknown' %}
+                                                <span class="text-gray-500 ml-2">- {{ result.brand }}</span>
+                                            {% endif %}
+                                        </label>
+                                        <button 
+                                            type="submit" 
+                                            class="px-3 py-1.5 bg-gradient-to-r from-green-200 to-green-300 text-black rounded-md shadow-md hover:from-green-300 hover:to-green-400 transition duration-300 ease-in-out ml-4 hidden next-button font-bold"
+                                            disabled
+                                        >
+                                            Next
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </fieldset>
+                    </form>
+                </section>
+            {% elif request.method == 'POST' %}
+                <p class="text-center text-gray-600">No results found for your search.</p>
+            {% endif %}
+        {% endif %}
+
+        <!-- Weight Input Section -->
+        {% if selected_food %}
+            <section class="mb-8">
+                <form 
+                    action="/calculate-calories" 
+                    method="POST" 
+                    class="max-w-md mx-auto bg-white p-6 rounded-lg shadow"
+                >
+                    <h2 class="text-xl font-semibold mb-4">Add {{ selected_food }}</h2>
+                    <input type="hidden" name="food" value="{{ selected_food }}">
+                    <input type="hidden" name="calories_per_100g" value="{{ selected_food_calories }}">
+                    
+                    <div class="mb-4">
+                        <label for="weight" class="block mb-2">Portion Size (grams):</label>
+                        <input 
+                            type="number" 
+                            id="weight" 
+                            name="weight" 
+                            placeholder="e.g., 100" 
+                            min="1" 
+                            step="1" 
+                            class="w-full p-2 border rounded"
+                            required
+                        >
+                    </div>
+
+                    <div class="space-y-3">
+                        <button 
+                            type="submit" 
+                            class="w-full px-3 py-1.5 bg-gradient-to-r from-yellow-200 to-yellow-300 text-black rounded-md shadow-md hover:from-yellow-300 hover:to-yellow-400 transition duration-300 ease-in-out font-bold"
+                        >
+                            Add to Today's Log
+                        </button>
+                        
+                        <a 
+                            href="/tracker" 
+                            class="block w-full px-3 py-1.5 bg-gradient-to-r from-gray-200 to-gray-300 text-black rounded-md shadow-md hover:from-gray-300 hover:to-gray-400 transition duration-300 ease-in-out text-center font-bold"
+                        >
+                            Back to Search
+                        </a>
+                    </div>
+                </form>
+            </section>
+        {% endif %}
+    </div>
+
+    <script>
+        // JavaScript to show/hide and enable/disable the "Next" buttons based on radio button selection
+        const radioButtons = document.querySelectorAll('input[type="radio"]');
+        const nextButtons = document.querySelectorAll('.next-button');
+
+        radioButtons.forEach((radio, index) => {
+            radio.addEventListener('change', () => {
+                nextButtons.forEach((button, buttonIndex) => {
+                    if (index === buttonIndex) {
+                        button.classList.remove('hidden');
+                        button.disabled = false;
+                    } else {
+                        button.classList.add('hidden');
+                        button.disabled = true;
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

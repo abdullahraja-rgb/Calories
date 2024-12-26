@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Progress - Calorie Tracker
+{% endblock %}
+
+{% block main %}
+    <h1>Your Progress</h1>
+
+    {% if goal %}
+        <p>Your goal is: {{ goal }} calories/day</p>
+        <p>You have consumed: {{ consumed_calories }} calories today</p>
+
+        <!-- Progress Bar -->
+        <div style="width: 100%; background-color: #ddd; border-radius: 10px; margin-top: 20px;">
+            <div 
+                style="height: 30px; width: {{ progress_percentage }}%; background-color: #4caf50; 
+                text-align: center; line-height: 30px; color: white; border-radius: 10px;">
+                {{ progress_percentage | round(1) }}%
+            </div>
+        </div>
+
+    {% else %}
+        <p>No goal set yet. Please set your goal!</p>
+    {% endif %}
+
+    <a href="{{ url_for('calorie_calculator_route') }}">Back to Calculator</a>
+{% endblock %}

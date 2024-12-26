@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+
+        <!-- Bootstrap -->
+        <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+        <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+        <link rel="icon" href="/static/fire-favicon.ico" type="image/x-icon">
+        <link href="/static/styles.css" rel="stylesheet">
+
+        <title>Calorie Tracker {% block title %}{% endblock %}</title>
+
+        <style>
+            :root {
+                --retro-primary: #4CAF50;
+                --retro-secondary: #FF9800;
+                --retro-accent: #E91E63;
+                --retro-background: #f0f0f0;
+                --retro-dark: #2c2c2c;
+            }
+
+            body {
+                font-family: 'VT323', monospace;
+                font-size: 1.2rem;
+                background-color: var(--retro-background);
+                background-image: linear-gradient(45deg, #ffffff 25%, transparent 25%), 
+                                linear-gradient(-45deg, #ffffff 25%, transparent 25%), 
+                                linear-gradient(45deg, transparent 75%, #ffffff 75%), 
+                                linear-gradient(-45deg, transparent 75%, #ffffff 75%);
+                background-size: 20px 20px;
+                background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            }
+
+            .navbar {
+                background: var(--retro-dark) !important;
+                border-bottom: 4px solid var(--retro-primary);
+                padding: 1rem;
+            }
+
+            .navbar-brand {
+                font-family: 'Press Start 2P', cursive;
+                font-size: 1.2rem;
+                color: var(--retro-primary) !important;
+                text-shadow: 2px 2px 0px var(--retro-accent);
+            }
+
+            .nav-link {
+                color: white !important;
+                font-size: 1.3rem;
+                text-transform: uppercase;
+                padding: 0.7rem 1.2rem;
+                margin: 0 0.5rem;
+                border: 2px solid transparent;
+                text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+                font-family: 'VT323', monospace;
+                letter-spacing: 1px;
+            }
+
+            .nav-link:hover {
+                border: 2px solid var(--retro-secondary);
+                background-color: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+                transition: all 0.3s ease;
+            }
+
+            .alert {
+                background-color: var(--retro-primary);
+                color: white;
+                border: none;
+                border-radius: 0;
+                font-family: 'Press Start 2P', cursive;
+                font-size: 0.8rem;
+                padding: 1rem;
+                margin: 0;
+                text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+            }
+
+            main {
+                background-color: rgba(255, 255, 255, 0.9);
+                border: 4px solid var(--retro-dark);
+                border-radius: 8px;
+                box-shadow: 8px 8px 0px var(--retro-primary);
+                margin: 2rem auto;
+                max-width: 1200px;
+                padding: 2rem;
+            }
+
+            .container-fluid {
+                max-width: 1400px;
+            }
+
+            /* Enhanced button styling */
+            .btn {
+                font-family: 'VT323', monospace;
+                font-size: 1.3rem;
+                padding: 0.8rem 1.5rem;
+                border: 3px solid var(--retro-dark);
+                box-shadow: 4px 4px 0px var(--retro-dark);
+                transition: all 0.2s ease;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-weight: bold;
+                color: var(--retro-dark);
+                background-color: #ffffff;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .btn:hover {
+                transform: translate(2px, 2px);
+                box-shadow: 2px 2px 0px var(--retro-dark);
+                background-color: var(--retro-secondary);
+                color: white;
+            }
+
+            .btn-primary {
+                background-color: var(--retro-primary);
+                color: white;
+            }
+
+            .btn-secondary {
+                background-color: var(--retro-secondary);
+                color: white;
+            }
+
+            .btn-danger {
+                background-color: var(--retro-accent);
+                color: white;
+            }
+
+            /* Enhanced form styling */
+            .form-control {
+                border: 3px solid var(--retro-dark);
+                border-radius: 0;
+                padding: 1rem;
+                font-family: 'VT323', monospace;
+                font-size: 1.4rem;
+                background-color: white;
+            }
+
+            .form-control:focus {
+                box-shadow: 4px 4px 0px var(--retro-primary);
+                border-color: var(--retro-dark);
+                background-color: #f8f8f8;
+            }
+
+            /* Form labels */
+            label {
+                font-size: 1.4rem;
+                color: var(--retro-dark);
+                margin-bottom: 0.5rem;
+                font-weight: bold;
+            }
+
+            /* Footer styling */
+            footer {
+                font-family: 'Press Start 2P', cursive;
+                font-size: 0.6rem;
+                color: var(--retro-dark);
+                padding: 2rem;
+                text-align: center;
+            }
+
+            footer a {
+                color: var(--retro-primary);
+                text-decoration: none;
+            }
+
+            footer a:hover {
+                color: var(--retro-accent);
+                text-decoration: underline;
+            }
+
+            /* Custom logo colors */
+            .blue { color: #2196F3; }
+            .red { color: #F44336; }
+            .yellow { color: #FFC107; }
+            .green { color: #4CAF50; }
+
+            /* Enhanced card styling */
+            .card {
+                border: 3px solid var(--retro-dark);
+                border-radius: 0;
+                box-shadow: 6px 6px 0px var(--retro-secondary);
+                padding: 1rem;
+            }
+
+            .card-header {
+                background-color: var(--retro-dark);
+                color: white;
+                font-size: 1.3rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .navbar-brand {
+                    font-size: 1rem;
+                }
+
+                main {
+                    margin: 1rem;
+                    padding: 1rem;
+                }
+
+                .btn {
+                    font-size: 1.1rem;
+                    padding: 0.7rem 1.2rem;
+                }
+
+                .nav-link {
+                    font-size: 1.1rem;
+                    padding: 0.5rem 1rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-md">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <span class="blue">C</span><span class="red">alo</span><span class="yellow">rie</span> 
+                    <span class="green">Calculator</span>
+                </a>
+                <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" 
+                        class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    {% if session["user_id"] %}
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/calculator">Calories Calculator</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/tracker">Search Tracker</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/manual_tracker">Manual Tracker</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/progress">Progress</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        {% if get_flashed_messages() %}
+            <header>
+                <div class="alert mb-0 text-center" role="alert">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </header>
+        {% endif %}
+
+        <main class="container-fluid py-5 text-center">
+            {% block main %}{% endblock %}
+        </main>
+
+        <footer>
+            <p>Calorie Tracker by Abdullah &copy; 2024</p>
+        </footer>
+        <script>
+  (function() {
+    var favicons = [
+      '/static/fire-favicon-1.ico',
+      '/static/fire-favicon-2.ico',
+      '/static/fire-favicon-3.ico',
+      '/static/fire-favicon-4.ico'
+    ];
+    var currentFavicon = 0;
+    
+    setInterval(function() {
+      currentFavicon = (currentFavicon + 1) % favicons.length;
+      document.querySelector('link[rel="icon"]').href = favicons[currentFavicon];
+    }, 500);
+  })();
+</script>
+    </body>
+</html>
+

@@ -51,6 +51,51 @@ login required function
 
 db file containing calories for all common food items. (may have to incorporate multiple db file)
 
+users table is the initial part which handles all the main info
+
+a tick box to allow users to know more from us through emails.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+FOOD TRACKING PLAN
+allowing users to enter various food items through a search nd select bar.
+adding this would add to the total caloric intake
+a calories row in a new table where the total calories for the day.
+
+
+------------------------------------------------------------------------
+
+SET GOAL 
+the selected calori amount will be inserted into a db table which will contain the following amount
+1. a boolean suggesting whether the daily caloric goal has been achieved
+2. amount left - which will be updated by subtracting the food calorie amount from the goal
+3. food item and its calories
+
+----------------------------------------------------------------------------------
+
+progress.html ------> shows your currently set caloric goal and a circular progress tracker
+tracker.html -----> works fine but i want the amount of searching options thru use of either multiple apis or a single api that contains all the required data, select on results should be next to the selected value
+manual adder ------> add food items and their calories manually 
+how does tracking work thru this searching and manual process -----> 
+
+----------------------------------------------------------------------
+1. manual calorie tracking manual.html 
+2. improve searching food for calories tracker.html
+3. these calories should be taken away from the daily caloric intake into a value caloric progress which should be displayed on progress .html
+4. history.html to show all the calories and foods added 
+5. 
+
+
+
+--------------------------------------------------------------------------
+FIXES
+ 1. when deleted food from history progress updates  done
+2. searching
+3. improved api for searching food
+4. final additions
+
+
+
 
 
 

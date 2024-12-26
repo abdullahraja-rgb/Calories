@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Food History - Calorie Tracker
+{% endblock %}
+
+{% block main %}
+    <h1>Your Food History</h1>
+
+    {% if food_entries %}
+        <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th>Food Item</th>
+                    <th>Calories</th>
+                    <th>Consumption Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in food_entries %}
+                    <tr>
+                        <td>{{ entry.food_item }}</td>
+                        <td>{{ entry.calories }}</td>
+                        <td>{{ entry.consumption_time }}</td>
+                        <td>
+                            <button onclick="deleteFood('{{ entry.id }}')">Delete</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No food entries found. Start tracking your meals!</p>
+    {% endif %}
+
+    <a href="{{ url_for('manual_tracker') }}">Back to Food Tracker</a>
+
+    <script>
+        /**
+         * Sends a DELETE request to the backend to delete a food entry.
+         * @param {string} foodId - The ID of the food entry to delete.
+         */
+        function deleteFood(foodId) {
+            if (confirm("Are you sure you want to delete this item?")) {
+                fetch(`/delete-food/${foodId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload(); // Refresh the page to update the list
+                    } else {
+                        response.json().then(data => {
+                            alert(data.error || 'Failed to delete food item.');
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting food item:', error);
+                    alert('An unexpected error occurred.');
+                });
+            }
+        }
+    </script>
+{% endblock %}

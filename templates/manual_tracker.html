@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+<h2>Input Food Item Manually</h2>
+<form action="/manual_tracker" method="POST">
+    <label for="food_name">Food Item:</label>
+    <input type="text" id="food_name" name="food_name" placeholder="Enter food item" required>
+
+    <div class="form-group">
+        <label for="caloriesOption">Choose the method to calculate calories:</label>
+        <div>
+            <label><input type="radio" name="caloriesOption" value="perItem" checked> Calories per item and total items</label><br>
+            <label><input type="radio" name="caloriesOption" value="per100g"> Calories per 100g and total weight</label><br>
+            <label><input type="radio" name="caloriesOption" value="totalCalories"> Total calories only</label>
+        </div>
+    </div>
+
+    <div id="perItemGroup">
+        <label for="caloriesPerItem">Calories per item:</label>
+        <input type="number" id="caloriesPerItem" name="caloriesPerItem" placeholder="Calories per item" min="1" step="1">
+        
+        <label for="totalItems">Total items:</label>
+        <input type="number" id="totalItems" name="totalItems" placeholder="Total items" min="1" step="1">
+    </div>
+
+    <div id="per100gGroup" style="display:none;">
+        <label for="calories">Calories (per 100g):</label>
+        <input type="number" id="calories" name="calories" placeholder="e.g., 250" min="1" step="1">
+
+        <label for="weight">Weight (grams):</label>
+        <input type="number" id="weight" name="weight" placeholder="e.g., 100" min="1" step="1">
+    </div>
+
+    <div id="totalCaloriesGroup" style="display:none;">
+        <label for="totalCalories">Total calories:</label>
+        <input type="number" id="totalCalories" name="totalCalories" placeholder="Total calories" min="1" step="1">
+    </div>
+
+    <button type="submit">Add to Tracker</button>
+</form>
+
+<script>
+    // Simple JavaScript to toggle input fields based on selected option
+    document.querySelectorAll('input[name="caloriesOption"]').forEach((radio) => {
+        radio.addEventListener('change', (event) => {
+            const option = event.target.value;
+            
+            // Hide all input groups
+            document.getElementById('perItemGroup').style.display = 'none';
+            document.getElementById('per100gGroup').style.display = 'none';
+            document.getElementById('totalCaloriesGroup').style.display = 'none';
+
+            // Show the relevant input group based on the selected option
+            if (option === 'perItem') {
+                document.getElementById('perItemGroup').style.display = 'block';
+            } else if (option === 'per100g') {
+                document.getElementById('per100gGroup').style.display = 'block';
+            } else if (option === 'totalCalories') {
+                document.getElementById('totalCaloriesGroup').style.display = 'block';
+            }
+        });
+    });
+</script>
+{% endblock %}
+
