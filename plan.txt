@@ -1,100 +1,140 @@
-FORMULAS:
+# Formulas
 
-Mifflin-St Jeor Equation FOR (BMR - basal metabolic rate)
-For men:
-BMR = 10W + 6.25H - 5A + 5
-For women:
-BMR = 10W + 6.25H - 5A - 161
+## Mifflin-St Jeor Equation (BMR - Basal Metabolic Rate)
+### For Men:
+BMR = (10 × W) + (6.25 × H) - (5 × A) + 5
 
-(the BMR above is the total calories needed to MAINTAIN YOUR WEIGHT considering you DONT WORKOUT)
+### For Women:
+BMR = (10 × W) + (6.25 × H) - (5 × A) - 161
 
-W is body weight in kg
-H is body height in cm
-A is age
-F is body fat in percentage
+*Note: BMR represents the total calories needed to **maintain your weight** assuming no exercise.*
 
-(if you DO WORKOUT times the BMR by the values below) = CAL.COUNT = daily calories count
+**Variables:**
+- **W** = Body weight (kg)
+- **H** = Body height (cm)
+- **A** = Age (years)
+- **F** = Body fat percentage (not used in this formula)
 
-Sedentary (little or no exercise): 1.2
-Lightly active (light exercise/sports 1-3 days/week): 1.375
-Moderately active (moderate exercise/sports 3-5 days/week): 1.55
-Very active (hard exercise/sports 6-7 days a week): 1.725
-Super active (very hard exercise & physical job or 2x training): 1.9
+### Adjusting BMR for Activity Level:
+Multiply BMR by the corresponding value below to get **daily caloric intake (CAL.COUNT)**:
 
-TO LOSE 0.45kg PER WEEK (CAL.COUNT - 500) - WEIGHT LOSS
-TO LOSE 0.91kg PER WEEK (CAL.COUNT - 1000) - EXTREME WEIGHT LOSS
-MAINTAIN WEIGHT = (BMR X ACTIVITY rate)
-TO GAIN 0.45kg PER WEEK (CAL.COUNT + 500) - BULK 
-TO GAIN 0.91kg PER WEEK (CAL.COUNT + 1000) - EXTREME BULK
+| Activity Level                           | Multiplication Factor |
+|------------------------------------------|-----------------------|
+| Sedentary (little or no exercise)       | 1.2                   |
+| Lightly active (1-3 days/week)          | 1.375                 |
+| Moderately active (3-5 days/week)       | 1.55                  |
+| Very active (6-7 days/week)             | 1.725                 |
+| Super active (hard training or job)     | 1.9                   |
 
----------------------------------------------------------------------------------------------------------------------------
+### Adjusting CAL.COUNT for Goals:
+| Goal                                   | Calculation          |
+|----------------------------------------|----------------------|
+| **Weight Loss (0.45kg/week)**          | CAL.COUNT - 500     |
+| **Extreme Weight Loss (0.91kg/week)**  | CAL.COUNT - 1000    |
+| **Maintain Weight**                    | BMR × Activity Rate |
+| **Bulk (Gain 0.45kg/week)**            | CAL.COUNT + 500     |
+| **Extreme Bulk (Gain 0.91kg/week)**    | CAL.COUNT + 1000    |
 
-OTHER IMPORTANT THINGS:
+---
 
-create a db file (calories.db) store a table for login info
+# Database Setup
+
+### Create Database (`calories.db`):
+```bash
 sudo apt-get update
 sudo apt-get install sqlite3
 sqlite3 --version
-sqlite3 cal.db
+sqlite3 calories.db
+```
+
+### Create Users Table:
+```sql
 CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     name TEXT,
-    email TEXT
+    email TEXT,
+    password TEXT,  -- Stored securely (hashed)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-password -> stored cryptically, time the account was made
+```
 
+### Security Considerations:
+- Store **hashed passwords** in the database.
+- Implement **login authentication**.
+- Include a **checkbox for email updates**.
 
------------------------------------------------------------------------------------------------------------------------------
+---
 
-store hashed passwords on the data-base
-login required function 
+# Food Tracking Plan
 
-db file containing calories for all common food items. (may have to incorporate multiple db file)
+### **Functionality**:
+1. Users can enter food items via **search and select bar**.
+2. Selected food items contribute to **total daily caloric intake**.
+3. A **calories row** in a new table will store daily total calories.
 
-users table is the initial part which handles all the main info
+### **Database Table for Food Intake**:
+```sql
+CREATE TABLE food_tracking (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER,
+    food_item TEXT,
+    calories INTEGER,
+    date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+```
 
-a tick box to allow users to know more from us through emails.
+### **Set Goal Table**:
+```sql
+CREATE TABLE caloric_goals (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER,
+    goal_calories INTEGER,
+    calories_left INTEGER,
+    achieved BOOLEAN DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+```
 
-----------------------------------------------------------------------------------------------------------------------------
+### **Goal Tracking**:
+- **Boolean Field**: Tracks if the daily caloric goal is met.
+- **Amount Left**: Updates dynamically as food calories are added.
+- **Food Items**: Stored with respective calorie values.
 
-FOOD TRACKING PLAN
-allowing users to enter various food items through a search nd select bar.
-adding this would add to the total caloric intake
-a calories row in a new table where the total calories for the day.
+---
 
+# Web Pages
 
-------------------------------------------------------------------------
+| Page Name       | Functionality Description |
+|----------------|---------------------------|
+| `progress.html` | Displays caloric goal and progress tracker. |
+| `tracker.html`  | Improved food search with API integration. |
+| `manual.html`   | Manually add food items and calories. |
+| `history.html`  | Displays past food log and calorie history. |
 
-SET GOAL 
-the selected calori amount will be inserted into a db table which will contain the following amount
-1. a boolean suggesting whether the daily caloric goal has been achieved
-2. amount left - which will be updated by subtracting the food calorie amount from the goal
-3. food item and its calories
+### Improvements Needed:
+1. **Better Food Searching**: Implement **multiple APIs** or a single **comprehensive API**.
+2. **Selection Refinement**: Ensure **selected results appear next to the chosen value**.
+3. **Manual Entry Support**: Allow users to **add food items manually**.
+4. **Tracking Workflow**:
+   - Calories tracked through **search/manual entry**.
+   - Deducted from **daily caloric intake**.
+   - Displayed in **progress.html**.
+   - Saved in **history.html**.
 
-----------------------------------------------------------------------------------
+---
 
-progress.html ------> shows your currently set caloric goal and a circular progress tracker
-tracker.html -----> works fine but i want the amount of searching options thru use of either multiple apis or a single api that contains all the required data, select on results should be next to the selected value
-manual adder ------> add food items and their calories manually 
-how does tracking work thru this searching and manual process -----> 
+# Fixes & Final Additions
 
-----------------------------------------------------------------------
-1. manual calorie tracking manual.html 
-2. improve searching food for calories tracker.html
-3. these calories should be taken away from the daily caloric intake into a value caloric progress which should be displayed on progress .html
-4. history.html to show all the calories and foods added 
-5. 
+### **Completed Fixes:**
+✔ When deleting food from history, progress updates correctly.
 
+### **Pending Fixes:**
+- **Improve search functionality**.
+- **Enhance API integration for food search**.
+- **Finalize last feature additions**.
 
-
---------------------------------------------------------------------------
-FIXES
- 1. when deleted food from history progress updates  done
-2. searching
-3. improved api for searching food
-4. final additions
-
-
+---
 
 
 

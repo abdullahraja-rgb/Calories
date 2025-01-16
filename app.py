@@ -563,7 +563,6 @@ def select_calorie():
     # Show the selected calorie value
     return render_template('select_calorie.html', calorie=calorie)
 
-
 @app.route("/progress", methods=["GET", "POST"])
 @login_required
 def progress():
@@ -585,18 +584,24 @@ def progress():
     connection.close()
 
     # Extract the goal and consumed calories from the rows
-    goal = goal_row[0] if goal_row else None
-    consumed_calories = calorie_tracking_row[0] if calorie_tracking_row else 0
+    goal = round(goal_row[0]) if goal_row else None
+    consumed_calories = round(calorie_tracking_row[0]) if calorie_tracking_row else 0
 
     # Calculate progress percentage
     if goal is not None:
         progress_percentage = (consumed_calories / goal) * 100
-        progress_percentage = min(100, progress_percentage)  # Cap it at 100%
+        progress_percentage = round(min(100, progress_percentage))  # Cap it at 100% and round it
     else:
         progress_percentage = 0  # If no goal is set, progress is 0%
 
     # Render the progress page with the goal, consumed calories, and progress
-    return render_template('progress.html', goal=goal, consumed_calories=consumed_calories, progress_percentage=progress_percentage)
+    return render_template(
+        'progress.html', 
+        goal=goal, 
+        consumed_calories=consumed_calories, 
+        progress_percentage=progress_percentage
+    )
+
 
 
 @app.route("/history", methods=["GET"])

@@ -1,1 +1,0 @@
-login required for (layout.html, calculator, week)

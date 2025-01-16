@@ -1,5 +1,0 @@
-1) 404 error because i had code relying on cs50 as i used my cs50 work as inspiration (import in app.py)
-2) 404 error because i didnt have route("/") in my app.py
-3) 500 error because i wanted to link my app.py to load layout.html so i changed route("/") to render template layout.html. However the error
-was due to my directory containing all the html wasnt called templates. So i renamed it to templates.
-4) 500 error when i finish registering and press submit
