@@ -64,8 +64,3 @@ This is a Flask-based web application designed to help users track their daily c
 ## Contributions
 Open to contributions. Please follow coding standards and submit pull requests.
 
-## License
-[Specify your license here]
-
-Citations:
-[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/44757701/e0711b4e-546c-4099-9b73-8f7e0dd652ef/paste.txt
