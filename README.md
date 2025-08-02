@@ -1,66 +1,89 @@
-# Calories
+# 🔥 CalorieTracker
 
-# Calorie Tracker Web Application
+A modern, full-stack web application built with Flask and Python to help users track their daily calorie intake, set goals, and view their nutritional history.
 
-## Overview
-This is a Flask-based web application designed to help users track their daily calorie intake with features for manual and API-based food tracking.
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://calories-rose.vercel.app/)
+[![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Key Features
 
-### User Authentication
-- **Registration**: Users can create an account with username, email, and password
-- **Login**: Secure login with password hashing
-- **Logout**: Session management with secure logout functionality
+- **👤 Full User Authentication:** Secure user registration, login, and session management with password hashing.
+- **🔍 API-Powered Food Search:** Instantly search for thousands of food items using the **Nutritionix API** to get accurate calorie and nutritional data.
+- **✍️ Flexible Manual Entry:** Log food with multiple convenient methods: total calories, calories per item, or calories per 100g.
+- **📊 Progress Tracking:** Set daily calorie goals and visualize your consumption and remaining calories for the day.
+- **📖 Detailed History:** View a complete, time-stamped log of all your past food entries.
+- **🗑️ Edit Your Entries:** Easily delete incorrect food entries, with calorie totals updated automatically.
 
-### Calorie Tracking Modes
+## Tech Stack
 
-#### 1. API-Based Food Tracker
-- Search for food items using Nutritionix API
-- Retrieve detailed nutritional information
-- View food search results with calories and serving sizes
-- Select and log food items
+- **Backend:** **Python** with the **Flask** micro-framework.
+- **Database:** **SQLite3** for lightweight and portable data storage.
+- **Frontend:** **HTML5** with **Jinja2** for server-side templating.
+- **Styling:** **Bootstrap 5** for a modern, responsive user interface.
+- **External API:** **Nutritionix API** for real-time nutritional data.
+- **Deployment:** Configured for serverless deployment on **Vercel**.
 
-#### 2. Manual Food Entry
-- Multiple calorie input methods:
-  - Calories per item
-  - Calories per 100g
-  - Total calories
-- Tracks daily calorie consumption
-- Updates remaining calories in real-time
+## Getting Started
 
-## Technologies Used
-- **Backend**: Flask
-- **Database**: SQLite
-- **Authentication**: Werkzeug security
-- **API Integration**: Nutritionix API
-- **Session Management**: Flask-Session
+Follow these steps to get the application running locally on your machine.
 
-## Setup Requirements
-- Python
-- Flask
-- SQLite
-- Nutritionix API credentials
-- Required Python packages (listed in requirements.txt)
+### 1. Prerequisites
+- Python 3.9+
+- `pip` and `venv`
 
-## Security Features
-- Password hashing
-- Session management
-- Cache control headers
-- Error handling
-- Input validation
+### 2. Installation & Setup
 
-## Database Schema
-- Users table
-- Calorie tracking table
-- Food entries table
+**1. Clone the repository:**
+```bash
+git clone [https://github.com/abdullahraja-rgb/Calories.git](https://github.com/abdullahraja-rgb/Calories.git)
+cd your-repo-name
+````
 
-## Installation
-1. Clone the repository
-2. Install dependencies
-3. Set up Nutritionix API credentials
-4. Initialize SQLite database
-5. Run the Flask application
+**2. Create and activate a virtual environment:**
 
-## Contributions
-Open to contributions. Please follow coding standards and submit pull requests.
+```bash
+# Create the environment
+python -m venv venv
 
+# Activate it
+# On Windows:
+.\venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+```
+
+**3. Install dependencies:**
+
+```bash
+pip install -r requirements.txt
+```
+
+**4. Set up your Environment Variables:**
+
+  - Create a file named `.env` in the root of the project.
+  - Add your secret keys to this file:
+    ```
+    SECRET_KEY='your_super_secret_flask_key'
+    NUTRITIONIX_APP_ID='your_nutritionix_app_id'
+    NUTRITIONIX_APP_KEY='your_nutritionix_app_key'
+    ```
+
+**5. Initialize the Database:**
+
+  - You'll need a way to create your database tables. It's recommended to have a small Python script (`init_db.py`) to set up the initial `cal.db` file with the necessary tables (`users`, `tracker`, etc.).
+
+**6. Run the Application:**
+
+```bash
+flask run
+```
+
+The application will be available at `http://127.0.0.1:5000`.
+
+## Deployment
+
+This application is configured for easy deployment on **Vercel**. The `vercel.json` file handles the build and routing configuration for a serverless Python environment. To deploy, connect your GitHub repository to Vercel and add your environment variables to the project settings.
+
+```
+```
