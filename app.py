@@ -13,6 +13,11 @@ from typing import List, Dict, Optional
 from dataclasses import dataclass
 import re
 from difflib import SequenceMatcher
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configure application
 app = Flask(__name__)
@@ -128,8 +133,8 @@ def tracker():
             encoded_query = urllib.parse.quote_plus(query.strip())
             url = f'https://trackapi.nutritionix.com/v2/search/instant?query={encoded_query}'
             headers = {
-                'x-app-id': 'f3fa0ba1',  # Replace with your actual Nutritionix App ID
-                'x-app-key': '93a6074cf05bc391f0cf6b3985e8e807',  # Replace with your actual Nutritionix App Key
+                'x-app-id': os.environ.get('NUTRITIONIX_APP_ID'),
+                'x-app-key': os.environ.get('NUTRITIONIX_APP_KEY'),
                 'x-remote-user-id': '0'
             }
             response = requests.get(url, headers=headers, timeout=5)
@@ -505,7 +510,8 @@ def login():
     else:
         return render_template("login.html")
     
-app.secret_key = 'your_secret_key'
+# Load the secret key from environment variables
+app.secret_key = os.environ.get('SECRET_KEY')
 
 @app.route('/calculator', methods=['GET', 'POST'])
 def calorie_calculator_route():
