@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configure application
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../templates', static_folder='../static')
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
