@@ -4,14 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, width=device-width">
 
-    <!-- Bootstrap -->
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 
-    <link rel="icon" href="/static/fire-favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/static/favicon.png" type="image/x-icon">
     <link href="/static/styles.css" rel="stylesheet">
     <title>Calorie Tracker {% block title %}{% endblock %}</title>
 
@@ -212,9 +210,11 @@
 <body>
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="/static/favicon.png" alt="Favicon" width="30" class="d-inline-block align-text-top me-2">
+                
                 <span class="blue">C</span><span class="red">alo</span><span class="yellow">rie</span> 
-                <span class="green">Calculator</span>
+                <span class="green">-Calculator</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
                 <span class="navbar-toggler-icon"></span>
@@ -284,7 +284,7 @@
     </main>
 
     <footer>
-        <p>Calorie Tracker by Abdullah &copy; 2024</p>
+        <p>Calorie Tracker by Abdullah &copy; 2025</p>
     </footer>
 
     <script>
