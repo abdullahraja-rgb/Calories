@@ -892,5 +892,5 @@ def handle_exception(error):
     logger.error(f"Unhandled exception: {error}")
     return render_template('error.html', error=error, message="An unexpected error occurred"), 500
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+#if __name__ == "__main__":
+    #app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
