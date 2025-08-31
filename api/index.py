@@ -1,25 +1,19 @@
 import os
 from flask import Flask, flash, redirect, render_template, request, session, url_for, jsonify
-from flask_session import Session
-from tempfile import mkdtemp
+# Remove flask_session and tempfile imports for Vercel compatibility
+# from flask_session import Session
+# from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-'''from extensions import login_required, calorie_calculator'''
 import sqlite3
 from datetime import datetime, timezone
 import requests
 from functools import wraps
 from typing import List, Dict, Optional
 from dataclasses import dataclass
-import re 
+import re
 from difflib import SequenceMatcher
-import os
 from dotenv import load_dotenv
-
-'''import requests'''
-
-'''from flask import redirect, render_template, session, Flask, request, render_template'''
-from functools import wraps
 
 # Load environment variables from .env
 load_dotenv()
@@ -27,14 +21,18 @@ load_dotenv()
 # Configure application
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 
-# Configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_FILE_DIR"] = mkdtemp()
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-# Ensure templates are auto-reloaded
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-Session(app)
+# Simple session configuration for Vercel (serverless)
+# Use Flask's built-in signed cookie sessions instead of filesystem
+app.secret_key = os.environ.get('SECRET_KEY', 'change-this-secret-key-in-production')
 
+# Remove all Flask-Session configuration for Vercel compatibility:
+# app.config["SESSION_FILE_DIR"] = mkdtemp()  # Don't use filesystem sessions on serverless
+# app.config["SESSION_TYPE"] = "filesystem"   # Don't use filesystem sessions on serverless
+# Session(app)  # Don't initialize Flask-Session
+
+# Keep these configurations
+app.config["SESSION_PERMANENT"] = False
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 @app.after_request
 def after_request(response):
@@ -43,8 +41,6 @@ def after_request(response):
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
-
-
 
 
 # Establish a connection with the db
@@ -244,9 +240,6 @@ def tracker():
     selected_food = None
     selected_food_calories = None
     calorie_status = None
-
-    # Existing logic to get calorie status (unchanged)
-    # ...
 
     if request.method == "POST":
         query = request.form.get("search")
