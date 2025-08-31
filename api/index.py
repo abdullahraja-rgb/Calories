@@ -43,90 +43,105 @@ def after_request(response):
     return response
 
 
-# Establish a connection with the db
+import tempfile
+import shutil
+
 def get_db():
-    """Establish a connection with the database using absolute path"""
-    # Get the directory where this script (index.py) is located
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # Database is in the same directory as index.py (api folder)
-    DB_PATH = os.path.join(BASE_DIR, "cal.db")
+    """Get database connection using temporary directory for write access"""
+    
+    # Use /tmp directory which is writable on most serverless platforms
+    temp_dir = tempfile.gettempdir()  # Usually /tmp
+    DB_PATH = os.path.join(temp_dir, "cal.db")
+    
+    # Check if database exists, if not create it
+    if not os.path.exists(DB_PATH):
+        print(f"Creating database at: {DB_PATH}")
+        
+        # If you have a template database in your project, copy it
+        source_db = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cal.db")
+        if os.path.exists(source_db):
+            try:
+                shutil.copy2(source_db, DB_PATH)
+                print("Copied existing database to temp directory")
+            except Exception as e:
+                print(f"Could not copy database: {e}")
+                # Create new database if copy fails
+                create_new_database(DB_PATH)
+        else:
+            # Create new database
+            create_new_database(DB_PATH)
     
     try:
-        # Check if database exists, create if it doesn't
-        if not os.path.exists(DB_PATH):
-            print(f"Database not found at {DB_PATH}, creating new database...")
-            connection = sqlite3.connect(DB_PATH)
-            
-            # Create the users table updated logic
-            connection.execute('''
-                CREATE TABLE IF NOT EXISTS users (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    username TEXT UNIQUE NOT NULL,
-                    password TEXT NOT NULL,
-                    email TEXT UNIQUE NOT NULL,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-                )
-            ''')
-            
-            # Create other necessary tables
-            connection.execute('''
-                CREATE TABLE IF NOT EXISTS tracker (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INTEGER NOT NULL,
-                    goal REAL NOT NULL,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (user_id) REFERENCES users (id)
-                )
-            ''')
-            
-            connection.execute('''
-                CREATE TABLE IF NOT EXISTS calorie_tracking (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INTEGER NOT NULL,
-                    date DATE NOT NULL,
-                    daily_goal REAL NOT NULL,
-                    consumed_calories REAL DEFAULT 0,
-                    remaining_calories REAL,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (user_id) REFERENCES users (id)
-                )
-            ''')
-            
-            connection.execute('''
-                CREATE TABLE IF NOT EXISTS food_entries (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INTEGER NOT NULL,
-                    calorie_tracking_id INTEGER NOT NULL,
-                    food_item TEXT NOT NULL,
-                    calories REAL NOT NULL,
-                    weight REAL,
-                    consumption_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (user_id) REFERENCES users (id),
-                    FOREIGN KEY (calorie_tracking_id) REFERENCES calorie_tracking (id)
-                )
-            ''')
-            
-            connection.commit()
-            connection.close()
-            print("Database created successfully!")
-        
-        # Connect to the database
         connection = sqlite3.connect(DB_PATH)
         connection.row_factory = sqlite3.Row
         
-        print(f"Successfully connected to database at: {DB_PATH}")
+        # Test write access
+        connection.execute("CREATE TABLE IF NOT EXISTS test_table (id INTEGER)")
+        connection.execute("DROP TABLE IF EXISTS test_table")
+        connection.commit()
+        
+        print(f"Successfully connected to writable database at: {DB_PATH}")
         return connection
         
-    except sqlite3.Error as e:
-        print(f"SQLite error: {e}")
-        print(f"Database path: {DB_PATH}")
-        print(f"Directory exists: {os.path.exists(BASE_DIR)}")
-        print(f"Directory writable: {os.access(BASE_DIR, os.W_OK)}")
-        raise
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        print(f"Database error: {e}")
         raise
 
+def create_new_database(db_path):
+    """Create a new database with all required tables"""
+    connection = sqlite3.connect(db_path)
+    
+    # Create all your tables
+    connection.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
+    connection.execute('''
+        CREATE TABLE IF NOT EXISTS tracker (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            goal REAL NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        )
+    ''')
+    
+    connection.execute('''
+        CREATE TABLE IF NOT EXISTS calorie_tracking (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            date DATE NOT NULL,
+            daily_goal REAL NOT NULL,
+            consumed_calories REAL DEFAULT 0,
+            remaining_calories REAL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        )
+    ''')
+    
+    connection.execute('''
+        CREATE TABLE IF NOT EXISTS food_entries (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            calorie_tracking_id INTEGER NOT NULL,
+            food_item TEXT NOT NULL,
+            calories REAL NOT NULL,
+            weight REAL,
+            consumption_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id),
+            FOREIGN KEY (calorie_tracking_id) REFERENCES calorie_tracking (id)
+        )
+    ''')
+    
+    connection.commit()
+    connection.close()
+    print("Created new database with all tables")
 
 
 def login_required(f):
