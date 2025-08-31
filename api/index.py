@@ -330,9 +330,15 @@ def tracker():
         except requests.exceptions.RequestException as e:
             logger.error(f"API request error: {e}")
             if hasattr(e, 'response') and e.response is not None:
-                flash(f"Error fetching food data: {e.response.status_code}", "danger")
+                # Check for 401 Unauthorized error specifically
+                if e.response.status_code == 401:
+                    flash("Daily API search limit may have been reached. Please try again later.", "warning")
+                else:
+                    # Handle other potential HTTP errors
+                    flash(f"Error fetching food data. Status code: {e.response.status_code}", "danger")
             else:
-                flash("Error fetching food data. Please try again.", "danger")
+                # Handle network errors where there is no response
+                flash("Error fetching food data. Please check your connection and try again.", "danger")
         except Exception as e:
             logger.error(f"Unexpected error in tracker: {e}")
             flash("An unexpected error occurred. Please try again.", "danger")
@@ -892,5 +898,5 @@ def handle_exception(error):
     logger.error(f"Unhandled exception: {error}")
     return render_template('error.html', error=error, message="An unexpected error occurred"), 500
 
-#if __name__ == "__main__":
-    #app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5001)))
