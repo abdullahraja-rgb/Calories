@@ -1,0 +1,343 @@
+2025-08-31 19:16:12,920 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.0.31:5000
+2025-08-31 19:16:12,920 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 19:16:26,240 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:26] "GET / HTTP/1.1" 200 -
+2025-08-31 19:16:26,583 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:26] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:16:26,585 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:26] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:16:27,559 - WARNING - HTTP Exception: 404 - Not Found
+2025-08-31 19:16:27,560 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:27] "[33mGET /static/fire-favicon-2.ico HTTP/1.1[0m" 404 -
+2025-08-31 19:16:28,124 - WARNING - HTTP Exception: 404 - Not Found
+2025-08-31 19:16:28,125 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:28] "[33mGET /static/fire-favicon-3.ico HTTP/1.1[0m" 404 -
+2025-08-31 19:16:28,624 - WARNING - HTTP Exception: 404 - Not Found
+2025-08-31 19:16:28,624 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:28] "[33mGET /static/fire-favicon-4.ico HTTP/1.1[0m" 404 -
+2025-08-31 19:16:29,091 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:29] "GET /register HTTP/1.1" 200 -
+2025-08-31 19:16:29,247 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:29] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:16:29,261 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:29] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:16:29,738 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:29] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:16:31,390 - WARNING - HTTP Exception: 404 - Not Found
+2025-08-31 19:16:31,391 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:31] "[33mGET /static/fire-favicon-1.ico HTTP/1.1[0m" 404 -
+2025-08-31 19:16:43,703 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:43] "POST /register HTTP/1.1" 200 -
+2025-08-31 19:16:44,131 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:44] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:16:44,149 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:44] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:16:58,724 - INFO - Creating database at: /tmp/cal.db
+2025-08-31 19:16:58,725 - INFO - Copied existing database to temp directory
+2025-08-31 19:16:58,729 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:58] "POST /register HTTP/1.1" 200 -
+2025-08-31 19:16:59,020 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:59] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:16:59,091 - INFO - 127.0.0.1 - - [31/Aug/2025 19:16:59] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:17:19,368 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:19] "[32mPOST /register HTTP/1.1[0m" 302 -
+2025-08-31 19:17:19,446 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:19] "GET /login HTTP/1.1" 200 -
+2025-08-31 19:17:19,715 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:19] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:17:19,726 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:19] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:17:24,221 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:24] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-08-31 19:17:24,284 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:24] "GET / HTTP/1.1" 200 -
+2025-08-31 19:17:24,447 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:24] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:17:24,449 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:24] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:17:26,457 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:26] "GET /calculator HTTP/1.1" 200 -
+2025-08-31 19:17:26,608 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:26] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:17:26,611 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:26] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:17:27,083 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:27] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:17:39,922 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:39] "POST /calculator HTTP/1.1" 200 -
+2025-08-31 19:17:40,247 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:40] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:17:40,250 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:40] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:17:44,127 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:44] "POST /select_calorie HTTP/1.1" 200 -
+2025-08-31 19:17:44,344 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:44] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:17:44,348 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:44] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:17:46,484 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:46] "GET /tracker HTTP/1.1" 200 -
+2025-08-31 19:17:46,637 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:46] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:17:46,640 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:46] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:17:47,031 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:47] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:17:58,262 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:58] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:17:58,546 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:58] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:17:58,551 - INFO - 127.0.0.1 - - [31/Aug/2025 19:17:58] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:18:07,832 - WARNING - HTTP Exception: 404 - Not Found
+2025-08-31 19:18:07,833 - INFO - 127.0.0.1 - - [31/Aug/2025 19:18:07] "[33mPOST /select-food HTTP/1.1[0m" 404 -
+2025-08-31 19:23:59,744 - INFO - 127.0.0.1 - - [31/Aug/2025 19:23:59] "GET / HTTP/1.1" 200 -
+2025-08-31 19:24:00,128 - INFO - 127.0.0.1 - - [31/Aug/2025 19:24:00] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:24:00,148 - INFO - 127.0.0.1 - - [31/Aug/2025 19:24:00] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:24:04,220 - INFO - 127.0.0.1 - - [31/Aug/2025 19:24:04] "GET /tracker HTTP/1.1" 200 -
+2025-08-31 19:24:04,573 - INFO - 127.0.0.1 - - [31/Aug/2025 19:24:04] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:24:04,646 - INFO - 127.0.0.1 - - [31/Aug/2025 19:24:04] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:24:05,263 - INFO - 127.0.0.1 - - [31/Aug/2025 19:24:05] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:24:15,679 - INFO - 127.0.0.1 - - [31/Aug/2025 19:24:15] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:24:15,993 - INFO - 127.0.0.1 - - [31/Aug/2025 19:24:15] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:24:15,999 - INFO - 127.0.0.1 - - [31/Aug/2025 19:24:15] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:24:16,299 - INFO - 127.0.0.1 - - [31/Aug/2025 19:24:16] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:24:19,005 - WARNING - HTTP Exception: 404 - Not Found
+2025-08-31 19:24:19,005 - INFO - 127.0.0.1 - - [31/Aug/2025 19:24:19] "[33mPOST /select-food HTTP/1.1[0m" 404 -
+2025-08-31 19:25:55,644 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.0.31:5000
+2025-08-31 19:25:55,644 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 19:25:58,802 - INFO - 127.0.0.1 - - [31/Aug/2025 19:25:58] "GET / HTTP/1.1" 200 -
+2025-08-31 19:25:59,181 - INFO - 127.0.0.1 - - [31/Aug/2025 19:25:59] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:25:59,181 - INFO - 127.0.0.1 - - [31/Aug/2025 19:25:59] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:26:02,934 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:02] "GET /tracker HTTP/1.1" 200 -
+2025-08-31 19:26:03,056 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:03] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:26:03,156 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:03] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:26:03,695 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:03] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:26:06,993 - WARNING - Error processing food item Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:07,249 - WARNING - Error processing food item Egg Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:07,544 - WARNING - Error processing food item Biryani Veg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:07,797 - WARNING - Error processing food item Biryani Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:08,098 - WARNING - Error processing food item Fish Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:08,407 - WARNING - Error processing food item Beef Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:08,706 - WARNING - Error processing food item Nasi Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:08,960 - WARNING - Error processing food item Egg Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:09,220 - WARNING - Error processing food item Palak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:09,478 - WARNING - Error processing food item Steak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:09,770 - WARNING - Error processing food item Mutton Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:10,036 - WARNING - Error processing food item Chicken Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:10,287 - WARNING - Error processing food item Chicken Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:10,550 - WARNING - Error processing food item Biryani With Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:10,809 - WARNING - Error processing food item Vegetable Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:11,064 - WARNING - Error processing food item Biryani Fish Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:11,325 - WARNING - Error processing food item Fish Biryani Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:11,621 - WARNING - Error processing food item Vegetable Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:11,875 - WARNING - Error processing food item Fish Biryani Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:12,138 - WARNING - Error processing food item Biryani Fish Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:12,139 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:12] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:26:12,390 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:12] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:26:12,401 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:12] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:26:16,875 - WARNING - Error processing food item Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:17,126 - WARNING - Error processing food item Egg Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:17,426 - WARNING - Error processing food item Biryani Veg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:17,678 - WARNING - Error processing food item Biryani Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:17,971 - WARNING - Error processing food item Fish Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:18,314 - WARNING - Error processing food item Beef Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:18,609 - WARNING - Error processing food item Nasi Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:18,879 - WARNING - Error processing food item Egg Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:19,176 - WARNING - Error processing food item Palak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:19,432 - WARNING - Error processing food item Steak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:19,581 - WARNING - Error processing food item Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:19,693 - WARNING - Error processing food item Mutton Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:19,834 - WARNING - Error processing food item Egg Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:19,949 - WARNING - Error processing food item Chicken Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:20,129 - WARNING - Error processing food item Biryani Veg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:20,238 - WARNING - Error processing food item Chicken Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:20,378 - WARNING - Error processing food item Biryani Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:20,492 - WARNING - Error processing food item Biryani With Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:20,629 - WARNING - Error processing food item Fish Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:20,740 - WARNING - Error processing food item Vegetable Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:20,887 - WARNING - Error processing food item Beef Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:20,989 - WARNING - Error processing food item Biryani Fish Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:21,153 - WARNING - Error processing food item Nasi Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:21,285 - WARNING - Error processing food item Fish Biryani Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:21,403 - WARNING - Error processing food item Egg Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:21,537 - WARNING - Error processing food item Vegetable Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:21,659 - WARNING - Error processing food item Palak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:21,803 - WARNING - Error processing food item Fish Biryani Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:21,907 - WARNING - Error processing food item Steak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:22,058 - WARNING - Error processing food item Biryani Fish Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:22,062 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:22] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:26:22,166 - WARNING - Error processing food item Mutton Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:22,416 - WARNING - Error processing food item Chicken Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:22,667 - WARNING - Error processing food item Chicken Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:22,962 - WARNING - Error processing food item Biryani With Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:23,264 - WARNING - Error processing food item Vegetable Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:23,556 - WARNING - Error processing food item Biryani Fish Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:23,805 - WARNING - Error processing food item Fish Biryani Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:24,098 - WARNING - Error processing food item Vegetable Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:24,384 - WARNING - Error processing food item Fish Biryani Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:24,689 - WARNING - Error processing food item Biryani Fish Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:24,690 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:24] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:26:25,113 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:25] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:26:25,124 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:25] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:26:25,935 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:25] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:26:35,036 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:35] "GET /tracker HTTP/1.1" 200 -
+2025-08-31 19:26:35,275 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:35] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:26:35,352 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:35] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:26:35,808 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:35] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:26:40,052 - WARNING - Error processing food item Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:40,301 - WARNING - Error processing food item Egg Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:40,552 - WARNING - Error processing food item Biryani Veg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:40,807 - WARNING - Error processing food item Biryani Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:41,060 - WARNING - Error processing food item Fish Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:41,313 - WARNING - Error processing food item Beef Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:41,609 - WARNING - Error processing food item Nasi Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:41,866 - WARNING - Error processing food item Egg Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:42,160 - WARNING - Error processing food item Palak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:42,459 - WARNING - Error processing food item Steak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:42,747 - WARNING - Error processing food item Mutton Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:42,998 - WARNING - Error processing food item Chicken Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:43,252 - WARNING - Error processing food item Chicken Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:43,503 - WARNING - Error processing food item Biryani With Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:43,755 - WARNING - Error processing food item Vegetable Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:44,001 - WARNING - Error processing food item Biryani Fish Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:44,295 - WARNING - Error processing food item Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:44,297 - WARNING - Error processing food item Fish Biryani Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:44,543 - WARNING - Error processing food item Vegetable Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:44,589 - WARNING - Error processing food item Egg Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:44,806 - WARNING - Error processing food item Fish Biryani Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:44,891 - WARNING - Error processing food item Biryani Veg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:45,060 - WARNING - Error processing food item Biryani Fish Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:45,061 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:45] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:26:45,181 - WARNING - Error processing food item Biryani Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:45,471 - WARNING - Error processing food item Fish Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:45,668 - WARNING - Error processing food item Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:45,725 - WARNING - Error processing food item Beef Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:45,963 - WARNING - Error processing food item Egg Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:46,024 - WARNING - Error processing food item Nasi Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:46,212 - WARNING - Error processing food item Biryani Veg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:46,317 - WARNING - Error processing food item Egg Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:46,507 - WARNING - Error processing food item Biryani Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:46,567 - WARNING - Error processing food item Palak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:46,759 - WARNING - Error processing food item Fish Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:46,822 - WARNING - Error processing food item Steak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:47,012 - WARNING - Error processing food item Beef Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:47,079 - WARNING - Error processing food item Mutton Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:47,262 - WARNING - Error processing food item Nasi Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:47,330 - WARNING - Error processing food item Chicken Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:47,515 - WARNING - Error processing food item Egg Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:47,577 - WARNING - Error processing food item Chicken Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:47,766 - WARNING - Error processing food item Palak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:47,872 - WARNING - Error processing food item Biryani With Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:48,020 - WARNING - Error processing food item Steak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:48,127 - WARNING - Error processing food item Vegetable Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:48,312 - WARNING - Error processing food item Mutton Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:48,377 - WARNING - Error processing food item Biryani Fish Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:48,566 - WARNING - Error processing food item Chicken Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:48,673 - WARNING - Error processing food item Fish Biryani Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:48,863 - WARNING - Error processing food item Chicken Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:48,924 - WARNING - Error processing food item Vegetable Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:49,117 - WARNING - Error processing food item Biryani With Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:49,176 - WARNING - Error processing food item Fish Biryani Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:49,406 - WARNING - Error processing food item Vegetable Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:49,465 - WARNING - Error processing food item Biryani Fish Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:49,466 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:49] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:26:49,698 - WARNING - Error processing food item Biryani Fish Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:50,037 - WARNING - Error processing food item Fish Biryani Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:50,290 - WARNING - Error processing food item Vegetable Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:50,545 - WARNING - Error processing food item Fish Biryani Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:50,799 - WARNING - Error processing food item Biryani Fish Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:26:50,800 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:50] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:26:51,066 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:51] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:26:51,070 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:51] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:26:51,495 - INFO - 127.0.0.1 - - [31/Aug/2025 19:26:51] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:27:49,532 - WARNING - Error processing food item Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:49,782 - WARNING - Error processing food item Egg Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:50,075 - WARNING - Error processing food item Biryani Veg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:50,364 - WARNING - Error processing food item Biryani Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:50,620 - WARNING - Error processing food item Fish Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:50,870 - WARNING - Error processing food item Beef Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:51,123 - WARNING - Error processing food item Nasi Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:51,381 - WARNING - Error processing food item Egg Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:51,632 - WARNING - Error processing food item Palak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:51,892 - WARNING - Error processing food item Steak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:52,186 - WARNING - Error processing food item Mutton Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:52,443 - WARNING - Error processing food item Chicken Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:52,691 - WARNING - Error processing food item Chicken Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:52,974 - WARNING - Error processing food item Biryani With Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:53,241 - WARNING - Error processing food item Vegetable Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:53,499 - WARNING - Error processing food item Biryani Fish Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:53,800 - WARNING - Error processing food item Fish Biryani Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:54,098 - WARNING - Error processing food item Vegetable Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:54,346 - WARNING - Error processing food item Fish Biryani Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:54,602 - WARNING - Error processing food item Biryani Fish Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:27:54,603 - INFO - 127.0.0.1 - - [31/Aug/2025 19:27:54] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:27:54,837 - INFO - 127.0.0.1 - - [31/Aug/2025 19:27:54] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:27:54,843 - INFO - 127.0.0.1 - - [31/Aug/2025 19:27:54] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:27:57,065 - INFO - 127.0.0.1 - - [31/Aug/2025 19:27:57] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-08-31 19:27:57,115 - INFO - 127.0.0.1 - - [31/Aug/2025 19:27:57] "GET / HTTP/1.1" 200 -
+2025-08-31 19:27:57,404 - INFO - 127.0.0.1 - - [31/Aug/2025 19:27:57] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:27:57,503 - INFO - 127.0.0.1 - - [31/Aug/2025 19:27:57] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:27:59,626 - INFO - 127.0.0.1 - - [31/Aug/2025 19:27:59] "GET /login HTTP/1.1" 200 -
+2025-08-31 19:27:59,768 - INFO - 127.0.0.1 - - [31/Aug/2025 19:27:59] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:27:59,786 - INFO - 127.0.0.1 - - [31/Aug/2025 19:27:59] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:28:01,578 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:01] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-08-31 19:28:01,684 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:01] "GET / HTTP/1.1" 200 -
+2025-08-31 19:28:02,079 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:02] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:28:02,082 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:02] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:28:03,551 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:03] "GET /tracker HTTP/1.1" 200 -
+2025-08-31 19:28:03,713 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:03] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:28:03,723 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:03] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:28:07,363 - WARNING - Error processing food item Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:07,619 - WARNING - Error processing food item Egg Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:07,878 - WARNING - Error processing food item Biryani Veg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:08,126 - WARNING - Error processing food item Biryani Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:08,401 - WARNING - Error processing food item Fish Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:08,660 - WARNING - Error processing food item Beef Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:08,910 - WARNING - Error processing food item Nasi Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:09,160 - WARNING - Error processing food item Egg Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:09,416 - WARNING - Error processing food item Palak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:09,664 - WARNING - Error processing food item Steak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:09,923 - WARNING - Error processing food item Mutton Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:10,217 - WARNING - Error processing food item Chicken Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:10,508 - WARNING - Error processing food item Chicken Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:10,768 - WARNING - Error processing food item Biryani With Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:11,060 - WARNING - Error processing food item Vegetable Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:11,312 - WARNING - Error processing food item Biryani Fish Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:11,602 - WARNING - Error processing food item Fish Biryani Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:11,894 - WARNING - Error processing food item Vegetable Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:12,153 - WARNING - Error processing food item Fish Biryani Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:12,407 - WARNING - Error processing food item Biryani Fish Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:12,408 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:12] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:28:12,630 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:12] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:28:12,661 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:12] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:28:20,184 - WARNING - Error processing food item Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:20,435 - WARNING - Error processing food item Egg Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:20,723 - WARNING - Error processing food item Biryani Veg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:20,984 - WARNING - Error processing food item Biryani Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:21,284 - WARNING - Error processing food item Fish Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:21,536 - WARNING - Error processing food item Beef Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:21,807 - WARNING - Error processing food item Nasi Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:22,100 - WARNING - Error processing food item Egg Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:22,394 - WARNING - Error processing food item Palak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:22,646 - WARNING - Error processing food item Steak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:22,900 - WARNING - Error processing food item Mutton Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:23,195 - WARNING - Error processing food item Chicken Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:23,446 - WARNING - Error processing food item Chicken Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:23,701 - WARNING - Error processing food item Biryani With Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:23,964 - WARNING - Error processing food item Vegetable Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:24,215 - WARNING - Error processing food item Biryani Fish Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:24,465 - WARNING - Error processing food item Fish Biryani Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:24,760 - WARNING - Error processing food item Vegetable Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:25,024 - WARNING - Error processing food item Fish Biryani Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:25,277 - WARNING - Error processing food item Biryani Fish Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:28:25,278 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:25] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:28:25,525 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:25] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:28:25,529 - INFO - 127.0.0.1 - - [31/Aug/2025 19:28:25] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:33:24,824 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.0.31:5000
+2025-08-31 19:33:24,867 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 19:33:30,025 - INFO - 127.0.0.1 - - [31/Aug/2025 19:33:30] "GET / HTTP/1.1" 200 -
+2025-08-31 19:33:30,415 - INFO - 127.0.0.1 - - [31/Aug/2025 19:33:30] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:33:30,498 - INFO - 127.0.0.1 - - [31/Aug/2025 19:33:30] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:33:33,178 - INFO - 127.0.0.1 - - [31/Aug/2025 19:33:33] "GET /tracker HTTP/1.1" 200 -
+2025-08-31 19:33:33,560 - INFO - 127.0.0.1 - - [31/Aug/2025 19:33:33] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:33:33,563 - INFO - 127.0.0.1 - - [31/Aug/2025 19:33:33] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:33:39,139 - WARNING - Error processing food item Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:39,407 - WARNING - Error processing food item Egg Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:39,666 - WARNING - Error processing food item Biryani Veg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:39,967 - WARNING - Error processing food item Biryani Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:40,238 - WARNING - Error processing food item Fish Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:40,531 - WARNING - Error processing food item Beef Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:40,795 - WARNING - Error processing food item Nasi Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:41,053 - WARNING - Error processing food item Egg Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:41,300 - WARNING - Error processing food item Palak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:41,602 - WARNING - Error processing food item Steak Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:41,867 - WARNING - Error processing food item Mutton Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:42,120 - WARNING - Error processing food item Chicken Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:42,374 - WARNING - Error processing food item Chicken Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:42,663 - WARNING - Error processing food item Biryani With Egg: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:42,913 - WARNING - Error processing food item Vegetable Biryani: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:43,177 - WARNING - Error processing food item Biryani Fish Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:43,473 - WARNING - Error processing food item Fish Biryani Spice: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:43,733 - WARNING - Error processing food item Vegetable Biryanis: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:44,008 - WARNING - Error processing food item Fish Biryani Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:44,259 - WARNING - Error processing food item Biryani Fish Spice Mix: 401 Client Error: Unauthorized for url: https://trackapi.nutritionix.com/v2/natural/nutrients
+2025-08-31 19:33:44,260 - INFO - 127.0.0.1 - - [31/Aug/2025 19:33:44] "POST /tracker HTTP/1.1" 200 -
+2025-08-31 19:33:44,440 - INFO - 127.0.0.1 - - [31/Aug/2025 19:33:44] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:33:44,461 - INFO - 127.0.0.1 - - [31/Aug/2025 19:33:44] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:34:51,015 - ERROR - Error in progress route: no such column: created_at
+2025-08-31 19:34:51,018 - INFO - 127.0.0.1 - - [31/Aug/2025 19:34:51] "GET /progress HTTP/1.1" 200 -
+2025-08-31 19:34:51,312 - INFO - 127.0.0.1 - - [31/Aug/2025 19:34:51] "GET /static/styles.css HTTP/1.1" 200 -
+2025-08-31 19:34:51,386 - INFO - 127.0.0.1 - - [31/Aug/2025 19:34:51] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:34:54,793 - ERROR - Error in progress route: no such column: created_at
+2025-08-31 19:34:54,794 - INFO - 127.0.0.1 - - [31/Aug/2025 19:34:54] "GET /progress HTTP/1.1" 200 -
+2025-08-31 19:34:55,007 - INFO - 127.0.0.1 - - [31/Aug/2025 19:34:55] "GET /static/favicon.png HTTP/1.1" 200 -
+2025-08-31 19:34:55,011 - INFO - 127.0.0.1 - - [31/Aug/2025 19:34:55] "GET /static/styles.css HTTP/1.1" 200 -
