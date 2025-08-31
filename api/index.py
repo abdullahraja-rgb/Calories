@@ -11,7 +11,7 @@ import requests
 from functools import wraps
 from typing import List, Dict, Optional
 from dataclasses import dataclass
-import re
+import re 
 from difflib import SequenceMatcher
 import os
 from dotenv import load_dotenv
@@ -21,7 +21,7 @@ from dotenv import load_dotenv
 '''from flask import redirect, render_template, session, Flask, request, render_template'''
 from functools import wraps
 
-# Load environment variables from .env file
+# Load environment variables from .env
 load_dotenv()
 
 # Configure application
