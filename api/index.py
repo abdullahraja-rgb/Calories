@@ -72,7 +72,7 @@ def get_db():
             create_new_database(DB_PATH)
     
     try:
-        connection = sqlite3.connect(DB_PATH)
+        connection = sqlite3.connect(DB_PATH, timeout=15)
         connection.row_factory = sqlite3.Row
         
         # Test write access
