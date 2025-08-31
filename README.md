@@ -1,4 +1,5 @@
-# 🔥 CalorieTracker
+# 🔥 Calories
+
 
 A modern, full-stack web application built with Flask and Python to help users track their daily calorie intake, set goals, and view their nutritional history.
 
