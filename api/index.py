@@ -27,9 +27,14 @@ load_dotenv()
 # Configure application
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 
+# Configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+# Ensure templates are auto-reloaded
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 Session(app)
+
 
 @app.after_request
 def after_request(response):
@@ -39,28 +44,93 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+
+
+
 # Establish a connection with the db
 def get_db():
-    connection = sqlite3.connect("cal.db")
-    connection.row_factory = sqlite3.Row
-    return connection
+    """Establish a connection with the database using absolute path"""
+    # Get the directory where this script (index.py) is located
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # Database is in the same directory as index.py (api folder)
+    DB_PATH = os.path.join(BASE_DIR, "cal.db")
+    
+    try:
+        # Check if database exists, create if it doesn't
+        if not os.path.exists(DB_PATH):
+            print(f"Database not found at {DB_PATH}, creating new database...")
+            connection = sqlite3.connect(DB_PATH)
+            
+            # Create the users table
+            connection.execute('''
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT UNIQUE NOT NULL,
+                    password TEXT NOT NULL,
+                    email TEXT UNIQUE NOT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            
+            # Create other necessary tables
+            connection.execute('''
+                CREATE TABLE IF NOT EXISTS tracker (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER NOT NULL,
+                    goal REAL NOT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (user_id) REFERENCES users (id)
+                )
+            ''')
+            
+            connection.execute('''
+                CREATE TABLE IF NOT EXISTS calorie_tracking (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER NOT NULL,
+                    date DATE NOT NULL,
+                    daily_goal REAL NOT NULL,
+                    consumed_calories REAL DEFAULT 0,
+                    remaining_calories REAL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (user_id) REFERENCES users (id)
+                )
+            ''')
+            
+            connection.execute('''
+                CREATE TABLE IF NOT EXISTS food_entries (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER NOT NULL,
+                    calorie_tracking_id INTEGER NOT NULL,
+                    food_item TEXT NOT NULL,
+                    calories REAL NOT NULL,
+                    weight REAL,
+                    consumption_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (user_id) REFERENCES users (id),
+                    FOREIGN KEY (calorie_tracking_id) REFERENCES calorie_tracking (id)
+                )
+            ''')
+            
+            connection.commit()
+            connection.close()
+            print("Database created successfully!")
+        
+        # Connect to the database
+        connection = sqlite3.connect(DB_PATH)
+        connection.row_factory = sqlite3.Row
+        
+        print(f"Successfully connected to database at: {DB_PATH}")
+        return connection
+        
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        print(f"Database path: {DB_PATH}")
+        print(f"Directory exists: {os.path.exists(BASE_DIR)}")
+        print(f"Directory writable: {os.access(BASE_DIR, os.W_OK)}")
+        raise
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        raise
 
-# Ensure templates are auto-reloaded
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-
-# Ensure responses aren't cached
-@app.after_request
-def after_request(response):
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
-
-# Configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_FILE_DIR"] = mkdtemp()
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
 
 
 def login_required(f):
