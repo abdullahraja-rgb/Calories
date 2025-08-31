@@ -3,7 +3,6 @@ import logging
 from flask import Flask, flash, redirect, render_template, request, session, url_for, jsonify
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-import sqlite3
 from datetime import datetime, timezone
 import requests
 from functools import wraps
@@ -12,6 +11,8 @@ import shutil
 import urllib.parse
 from dotenv import load_dotenv
 import re
+import psycopg2
+import psycopg2.extras
 
 # Load environment variables from .env
 load_dotenv()
@@ -37,103 +38,21 @@ def after_request(response):
     return response
 
 def get_db():
-    """Get database connection using temporary directory for write access"""
-    # Use /tmp directory which is writable on most serverless platforms
-    temp_dir = tempfile.gettempdir()  # Usually /tmp
-    DB_PATH = os.path.join(temp_dir, "cal.db")
-    
-    # Check if database exists, if not create it
-    if not os.path.exists(DB_PATH):
-        logger.info(f"Creating database at: {DB_PATH}")
-        
-        # If you have a template database in your project, copy it
-        source_db = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cal.db")
-        if os.path.exists(source_db):
-            try:
-                shutil.copy2(source_db, DB_PATH)
-                logger.info("Copied existing database to temp directory")
-            except Exception as e:
-                logger.error(f"Could not copy database: {e}")
-                # Create new database if copy fails
-                create_new_database(DB_PATH)
-        else:
-            # Create new database
-            create_new_database(DB_PATH)
-    
+    """Get a connection to the persistent PostgreSQL database."""
+    db_url = os.environ.get("DATABASE_URL")
+    if not db_url:
+        logger.error("DATABASE_URL environment variable is not set.")
+        raise ValueError("Database connection URL is missing")
     try:
-        connection = sqlite3.connect(DB_PATH, timeout=15)
-        connection.row_factory = sqlite3.Row
-        
-        # Test write access
-        connection.execute("CREATE TABLE IF NOT EXISTS test_table (id INTEGER)")
-        connection.execute("DROP TABLE IF EXISTS test_table")
-        connection.commit()
-        
-        logger.info(f"Successfully connected to writable database at: {DB_PATH}")
+        # Connect to the external database
+        connection = psycopg2.connect(db_url)
+        # Return a connection object that provides dictionary-like access to rows
+        # This makes it behave like sqlite3.Row
+        connection.cursor_factory = psycopg2.extras.DictCursor
+        logger.info("Successfully connected to the PostgreSQL database.")
         return connection
-        
-    except Exception as e:
-        logger.error(f"Database error: {e}")
-        raise
-
-def create_new_database(db_path):
-    """Create a new database with all required tables"""
-    try:
-        connection = sqlite3.connect(db_path)
-        
-        # Create all your tables
-        connection.execute('''
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE NOT NULL,
-                password TEXT NOT NULL,
-                email TEXT UNIQUE NOT NULL,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-        
-        connection.execute('''
-            CREATE TABLE IF NOT EXISTS tracker (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                goal REAL NOT NULL,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (user_id) REFERENCES users (id)
-            )
-        ''')
-        
-        connection.execute('''
-            CREATE TABLE IF NOT EXISTS calorie_tracking (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                date DATE NOT NULL,
-                daily_goal REAL NOT NULL,
-                consumed_calories REAL DEFAULT 0,
-                remaining_calories REAL,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (user_id) REFERENCES users (id)
-            )
-        ''')
-        
-        connection.execute('''
-            CREATE TABLE IF NOT EXISTS food_entries (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                calorie_tracking_id INTEGER NOT NULL,
-                food_item TEXT NOT NULL,
-                calories REAL NOT NULL,
-                weight REAL,
-                consumption_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (user_id) REFERENCES users (id),
-                FOREIGN KEY (calorie_tracking_id) REFERENCES calorie_tracking (id)
-            )
-        ''')
-        
-        connection.commit()
-        connection.close()
-        logger.info("Created new database with all tables")
-    except Exception as e:
-        logger.error(f"Error creating database: {e}")
+    except psycopg2.OperationalError as e:
+        logger.error(f"Could not connect to the database: {e}")
         raise
 
 def login_required(f):
@@ -221,29 +140,34 @@ def register():
         try:
             password_hash = generate_password_hash(password)
             connection = get_db()
+            cursor = connection.cursor()
             
             # Check if username or email already exists
-            existing_user = connection.execute(
-                "SELECT id FROM users WHERE username = ? OR email = ?", 
+            cursor.execute(
+                "SELECT id FROM users WHERE username = %s OR email = %s", 
                 (username, email)
-            ).fetchone()
+            )
+            existing_user = cursor.fetchone()
             
             if existing_user:
                 flash("Username or email already exists.", "danger")
+                cursor.close()
+                connection.close()
                 return render_template("register.html")
             
             # Insert new user
-            connection.execute(
-                "INSERT INTO users (username, password, email) VALUES (?, ?, ?)", 
+            cursor.execute(
+                "INSERT INTO users (username, password, email) VALUES (%s, %s, %s) RETURNING id", 
                 (username, password_hash, email)
             )
             connection.commit()
+            cursor.close()
             connection.close()
             
             flash("Registration successful! Please log in.", "success")
             return redirect(url_for('login'))
         
-        except sqlite3.Error as e:
+        except psycopg2.Error as e:
             logger.error(f"Database error during registration: {e}")
             flash("An error occurred during registration. Please try again.", "danger")
             return render_template("register.html")
@@ -364,29 +288,34 @@ def manual_tracker():
 
         user_id = session["user_id"]
         connection = get_db()
+        cursor = connection.cursor()
 
         try:
             # Fetch the daily goal from the tracker table
-            tracker_record = connection.execute(
-                "SELECT goal FROM tracker WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
+            cursor.execute(
+                "SELECT goal FROM tracker WHERE user_id = %s ORDER BY created_at DESC LIMIT 1",
                 (user_id,)
-            ).fetchone()
+            )
+            tracker_record = cursor.fetchone()
 
             if not tracker_record:
                 flash("Daily goal not set. Please set your goal first.", "warning")
+                cursor.close()
+                connection.close()
                 return render_template("manual_tracker.html")
 
             daily_goal = tracker_record["goal"]
 
             # Fetch or create a calorie tracking record for the current date
-            calorie_tracking_record = connection.execute(
+            cursor.execute(
                 """
                 SELECT id, consumed_calories, remaining_calories 
                 FROM calorie_tracking
-                WHERE user_id = ? AND date = DATE('now')
+                WHERE user_id = %s AND date = CURRENT_DATE
                 """,
                 (user_id,)
-            ).fetchone()
+            )
+            calorie_tracking_record = cursor.fetchone()
 
             if calorie_tracking_record:
                 calorie_tracking_id = calorie_tracking_record["id"]
@@ -394,14 +323,14 @@ def manual_tracker():
                 remaining_calories = calorie_tracking_record["remaining_calories"]
             else:
                 # Create a new calorie tracking record for today
-                cursor = connection.execute(
+                cursor.execute(
                     """
                     INSERT INTO calorie_tracking (user_id, date, daily_goal, consumed_calories, remaining_calories)
-                    VALUES (?, DATE('now'), ?, 0, ?)
+                    VALUES (%s, CURRENT_DATE, %s, 0, %s) RETURNING id
                     """,
                     (user_id, daily_goal, daily_goal)
                 )
-                calorie_tracking_id = cursor.lastrowid
+                calorie_tracking_id = cursor.fetchone()["id"]
                 consumed_calories = 0
                 remaining_calories = daily_goal
 
@@ -415,6 +344,8 @@ def manual_tracker():
                 
                 if not calories_per_item or not total_items:
                     flash("Please fill in all fields.", "warning")
+                    cursor.close()
+                    connection.close()
                     return render_template("manual_tracker.html")
                 
                 try:
@@ -424,6 +355,8 @@ def manual_tracker():
                     weight = total_items
                 except ValueError:
                     flash("Please enter valid numbers.", "danger")
+                    cursor.close()
+                    connection.close()
                     return render_template("manual_tracker.html")
 
             elif calories_option == "per100g":
@@ -432,6 +365,8 @@ def manual_tracker():
                 
                 if not calories_per_100g or not weight_input:
                     flash("Please fill in all fields.", "warning")
+                    cursor.close()
+                    connection.close()
                     return render_template("manual_tracker.html")
                 
                 try:
@@ -440,6 +375,8 @@ def manual_tracker():
                     total_calories = (calories_per_100g * weight) / 100
                 except ValueError:
                     flash("Please enter valid numbers.", "danger")
+                    cursor.close()
+                    connection.close()
                     return render_template("manual_tracker.html")
 
             elif calories_option == "totalCalories":
@@ -447,23 +384,29 @@ def manual_tracker():
                 
                 if not total_calories_input:
                     flash("Please fill in all fields.", "warning")
+                    cursor.close()
+                    connection.close()
                     return render_template("manual_tracker.html")
                 
                 try:
                     total_calories = float(total_calories_input)
                 except ValueError:
                     flash("Please enter a valid number.", "danger")
+                    cursor.close()
+                    connection.close()
                     return render_template("manual_tracker.html")
 
             else:
                 flash("Invalid calories option selected.", "warning")
+                cursor.close()
+                connection.close()
                 return render_template("manual_tracker.html")
 
             # Insert the food entry
-            connection.execute(
+            cursor.execute(
                 """
                 INSERT INTO food_entries (user_id, calorie_tracking_id, food_item, calories, weight, consumption_time)
-                VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
                 """,
                 (user_id, calorie_tracking_id, food_name, total_calories, weight)
             )
@@ -472,11 +415,11 @@ def manual_tracker():
             new_consumed_calories = consumed_calories + total_calories
             new_remaining_calories = max(0, daily_goal - new_consumed_calories)
 
-            connection.execute(
+            cursor.execute(
                 """
                 UPDATE calorie_tracking
-                SET consumed_calories = ?, remaining_calories = ?
-                WHERE id = ?
+                SET consumed_calories = %s, remaining_calories = %s
+                WHERE id = %s
                 """,
                 (new_consumed_calories, new_remaining_calories, calorie_tracking_id)
             )
@@ -490,6 +433,7 @@ def manual_tracker():
             logger.error(f"Error in manual_tracker: {e}")
             flash("An error occurred while adding the food entry. Please try again.", "danger")
         finally:
+            cursor.close()
             connection.close()
 
     return render_template("manual_tracker.html")
@@ -523,6 +467,7 @@ def select_food():
 def calculate_calories():
     """Calculate calories based on food and weight"""
     connection = None
+    cursor = None
     try:
         food_name = request.form.get("food")
         calories_per_100g = request.form.get("calories_per_100g")
@@ -544,27 +489,30 @@ def calculate_calories():
             return redirect(url_for("tracker"))
 
         connection = get_db()
+        cursor = connection.cursor()
         
         # Get or create today's tracking record
-        tracking_record = connection.execute("""
+        cursor.execute("""
             SELECT id, consumed_calories, daily_goal 
             FROM calorie_tracking 
-            WHERE user_id = ? AND date = DATE('now')
-        """, (user_id,)).fetchone()
+            WHERE user_id = %s AND date = CURRENT_DATE
+        """, (user_id,))
+        tracking_record = cursor.fetchone()
 
         if not tracking_record:
             # Get user's goal
-            user_goal = connection.execute("""
-                SELECT goal FROM tracker WHERE user_id = ? ORDER BY created_at DESC LIMIT 1
-            """, (user_id,)).fetchone()
+            cursor.execute("""
+                SELECT goal FROM tracker WHERE user_id = %s ORDER BY created_at DESC LIMIT 1
+            """, (user_id,))
+            user_goal = cursor.fetchone()
             
             daily_goal = user_goal["goal"] if user_goal else 2000
             
-            cursor = connection.execute("""
+            cursor.execute("""
                 INSERT INTO calorie_tracking (user_id, date, daily_goal, consumed_calories, remaining_calories)
-                VALUES (?, DATE('now'), ?, 0, ?)
+                VALUES (%s, CURRENT_DATE, %s, 0, %s) RETURNING id
             """, (user_id, daily_goal, daily_goal))
-            tracking_id = cursor.lastrowid
+            tracking_id = cursor.fetchone()["id"]
             consumed_calories = 0
         else:
             tracking_id = tracking_record["id"]
@@ -577,17 +525,17 @@ def calculate_calories():
         new_remaining_calories = max(0, daily_goal - new_consumed_calories)
 
         # Insert food entry
-        connection.execute("""
+        cursor.execute("""
             INSERT INTO food_entries (
                 user_id, calorie_tracking_id, food_item, calories, weight, consumption_time
-            ) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            ) VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
         """, (user_id, tracking_id, food_name, total_calories, weight))
 
         # Update tracking record
-        connection.execute("""
+        cursor.execute("""
             UPDATE calorie_tracking 
-            SET consumed_calories = ?, remaining_calories = ?
-            WHERE id = ?
+            SET consumed_calories = %s, remaining_calories = %s
+            WHERE id = %s
         """, (new_consumed_calories, new_remaining_calories, tracking_id))
 
         connection.commit()
@@ -599,6 +547,8 @@ def calculate_calories():
         logger.error(f"Error in calculate_calories: {e}")
         flash(f"Error adding food entry: {str(e)}", "danger")
     finally:
+        if cursor:
+            cursor.close()
         if connection:
             connection.close()
 
@@ -626,10 +576,13 @@ def login():
         try:
             # Query database for username
             connection = get_db()
-            user = connection.execute(
-                "SELECT * FROM users WHERE username = ?", 
+            cursor = connection.cursor()
+            cursor.execute(
+                "SELECT * FROM users WHERE username = %s", 
                 (username,)
-            ).fetchone()
+            )
+            user = cursor.fetchone()
+            cursor.close()
             connection.close()
 
             # Check if user exists and password is correct
@@ -721,9 +674,10 @@ def select_calorie():
 
         # Insert the goal into the tracker table
         connection = get_db()
+        cursor = connection.cursor()
         try:
-            connection.execute(
-                "INSERT INTO tracker (goal, user_id) VALUES (?, ?)",
+            cursor.execute(
+                "INSERT INTO tracker (goal, user_id) VALUES (%s, %s)",
                 (calorie, user_id)
             )
             connection.commit()
@@ -732,6 +686,7 @@ def select_calorie():
             logger.error(f"Error setting calorie goal: {e}")
             flash("An error occurred while setting your goal. Please try again.", "danger")
         finally:
+            cursor.close()
             connection.close()
         
         return redirect(url_for("progress"))
@@ -744,18 +699,21 @@ def select_calorie():
 def progress():
     """Progress tracking page"""
     connection = get_db()
+    cursor = connection.cursor()
     try:
         # Fetch the latest calorie goal from the database
-        goal_row = connection.execute(
-            "SELECT goal FROM tracker WHERE user_id = ? ORDER BY id DESC LIMIT 1", 
+        cursor.execute(
+            "SELECT goal FROM tracker WHERE user_id = %s ORDER BY id DESC LIMIT 1", 
             (session["user_id"],)
-        ).fetchone()
+        )
+        goal_row = cursor.fetchone()
 
         # Fetch the consumed calories for today
-        calorie_tracking_row = connection.execute(
-            "SELECT consumed_calories FROM calorie_tracking WHERE user_id = ? AND date = DATE('now')", 
+        cursor.execute(
+            "SELECT consumed_calories FROM calorie_tracking WHERE user_id = %s AND date = CURRENT_DATE", 
             (session["user_id"],)
-        ).fetchone()
+        )
+        calorie_tracking_row = cursor.fetchone()
 
         # Extract the goal and consumed calories from the rows
         goal = round(goal_row["goal"]) if goal_row else None
@@ -768,12 +726,13 @@ def progress():
             progress_percentage = 0
 
         # Get weekly progress data for chart
-        weekly_data = connection.execute("""
+        cursor.execute("""
             SELECT date, consumed_calories, daily_goal 
             FROM calorie_tracking 
-            WHERE user_id = ? AND date >= DATE('now', '-6 days')
+            WHERE user_id = %s AND date >= CURRENT_DATE - INTERVAL '6 days'
             ORDER BY date
-        """, (session["user_id"],)).fetchall()
+        """, (session["user_id"],))
+        weekly_data = cursor.fetchall()
 
         # Format weekly data for chart
         chart_labels = []
@@ -781,7 +740,7 @@ def progress():
         chart_goal = []
         
         for row in weekly_data:
-            chart_labels.append(row["date"][5:])  # Extract MM-DD from YYYY-MM-DD
+            chart_labels.append(str(row["date"])[5:10])  # Extract MM-DD from YYYY-MM-DD
             chart_consumed.append(row["consumed_calories"])
             chart_goal.append(row["daily_goal"])
 
@@ -799,6 +758,7 @@ def progress():
         flash("An error occurred while loading your progress.", "danger")
         return render_template('progress.html', goal=None, consumed_calories=0, progress_percentage=0)
     finally:
+        cursor.close()
         connection.close()
 
 @app.route("/history")
@@ -806,17 +766,19 @@ def progress():
 def history():
     """Food history page"""
     connection = get_db()
+    cursor = connection.cursor()
     try:
         # Get the food entries for the current user
-        food_entries = connection.execute(
+        cursor.execute(
             """
             SELECT id, food_item, calories, consumption_time
             FROM food_entries
-            WHERE user_id = ?
+            WHERE user_id = %s
             ORDER BY consumption_time DESC
             """,
             (session["user_id"],)
-        ).fetchall()
+        )
+        food_entries = cursor.fetchall()
 
         return render_template("history.html", food_entries=food_entries)
     except Exception as e:
@@ -824,6 +786,7 @@ def history():
         flash("An error occurred while loading your history.", "danger")
         return render_template("history.html", food_entries=[])
     finally:
+        cursor.close()
         connection.close()
 
 @app.route('/delete-food/<int:food_id>', methods=['DELETE'])
@@ -831,37 +794,40 @@ def history():
 def delete_food(food_id):
     """Delete food entry (AJAX)"""
     connection = None
+    cursor = None
     try:
         connection = get_db()
+        cursor = connection.cursor()
 
         # Retrieve the food item and its calories
-        food_entry = connection.execute(
+        cursor.execute(
             """
             SELECT calories, consumption_time 
             FROM food_entries 
-            WHERE id = ? AND user_id = ?
+            WHERE id = %s AND user_id = %s
             """,
             (food_id, session["user_id"])
-        ).fetchone()
+        )
+        food_entry = cursor.fetchone()
 
         if not food_entry:
             return jsonify({'error': 'Food item not found'}), 404
 
         calories_to_deduct = food_entry['calories']
-        consumption_date = food_entry['consumption_time'][:10]  # Extract only the date part
+        consumption_date = food_entry['consumption_time'].date()  # Extract only the date part
 
         # Delete the food item from the food_entries table
-        connection.execute(
-            "DELETE FROM food_entries WHERE id = ? AND user_id = ?",
+        cursor.execute(
+            "DELETE FROM food_entries WHERE id = %s AND user_id = %s",
             (food_id, session["user_id"])
         )
 
         # Update the calorie_tracking table
-        connection.execute(
+        cursor.execute(
             """
             UPDATE calorie_tracking
-            SET consumed_calories = consumed_calories - ?
-            WHERE user_id = ? AND date = ?
+            SET consumed_calories = consumed_calories - %s
+            WHERE user_id = %s AND date = %s
             """,
             (calories_to_deduct, session["user_id"], consumption_date)
         )
@@ -877,6 +843,8 @@ def delete_food(food_id):
         logger.error(f"Error deleting food: {e}")
         return jsonify({'error': 'An error occurred while deleting the food item'}), 500
     finally:
+        if cursor:
+            cursor.close()
         if connection:
             connection.close()
 
