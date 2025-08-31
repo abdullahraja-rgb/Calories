@@ -57,7 +57,7 @@ def get_db():
             print(f"Database not found at {DB_PATH}, creating new database...")
             connection = sqlite3.connect(DB_PATH)
             
-            # Create the users table
+            # Create the users table updated logic
             connection.execute('''
                 CREATE TABLE IF NOT EXISTS users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
